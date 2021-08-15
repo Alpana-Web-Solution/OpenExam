@@ -1,0 +1,24 @@
+<?php
+
+namespace Tests;
+
+use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Support\Facades\DB;
+use App\Exceptions\Handler;
+use Illuminate\Contracts\Debug\ExceptionHandler;
+use App\Models\User;
+
+
+abstract class TestCase extends BaseTestCase
+{
+    use CreatesApplication;
+
+    protected function signIn($user = null)
+    {
+        $user = $user ?? User::factory()->create();
+
+        $this->actingAs($user);
+
+        return $this;
+    }
+}

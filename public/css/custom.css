@@ -1,0 +1,10 @@
+.badge-notification {
+    position: absolute;
+    font-size: .6rem;
+    margin-top: -.1rem;
+    margin-left: -.5rem;
+    padding: .2em .45em;
+}
+.exam-button-footer{
+    background-color: #fafbfc;
+}
