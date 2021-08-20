@@ -2,6 +2,10 @@
     
     OpenExam is an open-source free to use MCQ Web App.
 
+### Note -
+
+    Please note, this is an MVP version. I am not adding any features to this exam. Only bug fixes. I am creating the next version with a lot of improvements, which need modification in the database. Follow me on Twitter or Website blog posts for more information.
+
 
 ## Features
     
