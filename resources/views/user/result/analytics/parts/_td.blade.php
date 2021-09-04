@@ -47,7 +47,11 @@
     </div>
     </td>
     <td class="text-center">
+        @if(in_array($question->id,$usersAnsweredQuestionArray))
         {{$question->options[$usersAnswer[$question->id]]}}
+        @else
+            {{__("Not Answered!")}}
+        @endif
     </td>
     <td>
         <strong>{{$usersTime[$question->id] ?? "N/A"}} {{__("Sec")}}</strong>

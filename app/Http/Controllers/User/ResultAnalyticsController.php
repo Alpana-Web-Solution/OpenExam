@@ -27,11 +27,14 @@ class ResultAnalyticsController extends Controller
         // $examServices = new ExamServices();
 
         $result->load('exam');
+        $usersAnswer = $result->answers->toArray();
+
 
         return view('user.result.analytics.index')
         ->withResult($result)
         ->withQuestions($result->exam->questions()->paginate(20))
-        ->withUsersAnswer($result->answers)
+        ->withUsersAnswer($usersAnswer)
+        ->withUsersAnsweredQuestionArray(array_keys($usersAnswer))
         ->withUsersTime($result->time);
         // ->withExamAnsweres($examServices->calculateAnswer($result->answers,$result->exam->questions()->pluck('answer','id')));
     }

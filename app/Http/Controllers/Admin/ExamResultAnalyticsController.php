@@ -19,10 +19,14 @@ class ExamResultAnalyticsController extends Controller
     public function __invoke(Request $request,Exam $exam, Result $result)
     {
         $result->load('exam');
+        $usersAnswer = $result->answers->toArray();
+
+
         return view('admin.exam.result.analytics.index')
         ->withResult($result)
         ->withQuestions($result->exam->questions()->paginate(20))
-        ->withUsersAnswer($result->answers)
+        ->withUsersAnswer($usersAnswer)
+        ->withUsersAnsweredQuestionArray(array_keys($usersAnswer))
         ->withUsersTime($result->time);
     }
 }
