@@ -15,8 +15,10 @@ class QuestionTest extends TestCase
     public function test_get_question_list()
     {
         Question::factory(30)->create();
-        $this->actAsAdmin()->get(route('admin.question.index'))->assertOk();
-        $this->assertDatabaseCount('questions',30);
+        $this->actAsAdmin()->get(route('admin.question.index'))
+            ->assertOk()
+            ->assertSee('Create A Question');
+        $this->assertDatabaseCount('questions', 30);
     }
 
     public function test_show_question()
