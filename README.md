@@ -84,7 +84,24 @@ Now Link your storage for uploads
 ```bash
 php artisan storage:link
 ```
+### Extra
 
+If you need to populate demo data and test the exam, please run the below command to generate an examination for you, with 100 questions and 30 days validity.
+
+```bash
+php artisan db:seed --class=ExamSeeder
+```
+
+If you need only demo questions please run this command which will generate 100 questions for you.
+
+```bash
+php artisan db:seed --class=QuestionSeeder
+```
+If you need only demo subjects please run this command which will generate 10 subjects for you.
+
+```bash
+php artisan db:seed --class=SubjectSeeder
+```
 
 ### Licence
 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.

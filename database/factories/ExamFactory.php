@@ -22,7 +22,15 @@ class ExamFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name'=> $this->faker->word(3),
+            'description'=>$this->faker->sentence(),
+            'start_date'=>now(),
+            'end_date'=>now()->addDays(30),
+            'duration'=>3600,
+            'total_marks'=>100,
+            'default_mark'=>1,
+            'status'=>1,
+            'publish_result'=>1
         ];
     }
 }
