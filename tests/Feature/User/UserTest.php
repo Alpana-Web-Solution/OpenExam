@@ -46,9 +46,5 @@ class UserTest extends TestCase
         ->assertSeeText('ড্যাশবোর্ড');
     }
 
-    public function test_check_exam_exists()
-    {
-
-    }
 
 }
