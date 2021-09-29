@@ -5,6 +5,7 @@ namespace Tests;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\Handler;
+use App\Models\Question;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -32,5 +33,10 @@ abstract class TestCase extends BaseTestCase
         $this->actingAs($user);
         return $this;
 
+    }
+
+    public function createQuestion($args = [],$num = null)
+    {
+        return Question::factory($num)->create($args);
     }
 }
