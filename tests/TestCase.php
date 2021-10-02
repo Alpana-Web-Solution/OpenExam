@@ -29,7 +29,7 @@ abstract class TestCase extends BaseTestCase
 
     public function actAsAdmin()
     {
-        $user = User::factory(['is_admin'=>1])->create();
+        $user = User::factory(['is_admin'=>1,'name'=>'Admin','email'=>'admin@admin.com'])->create();
         $this->actingAs($user);
         return $this;
 

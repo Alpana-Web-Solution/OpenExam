@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UsermanagerRequest;
 use App\Models\User;
 use App\Models\Requisition;
 use Illuminate\Support\Facades\Hash;
@@ -13,20 +14,6 @@ use Illuminate\Support\Facades\Mail;
 
 class UserManagerController extends Controller
 {
-
-    // Validation function to eliminate repetitive code
-    private function validateUser()
-    {
-        return request()->validate([
-        "email"=>"required",
-        "name" => "required",
-        "username" => "required|min:6|alpha_dash",
-        'password' => "required|string|min:8|confirmed",
-        "mobile" => "required|digits:10",        
-        
-        ]);
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -53,20 +40,19 @@ class UserManagerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UsermanagerRequest $request)
     {
-        // Get validated data and add password and last donated field
-        $data = $this->validateUser();
+        $data = $request->validated();
         unset($data['password']);
-        
+
         if (!empty(request()->password)) {
             $data +=['password'=>Hash::make(request()->password)];
         }else{
             // Else needed otherwiese I have to unset
             $data +=['password' => bcrypt(mt_rand())];
         }
-        
-        
+
+
 
         // Create an user using data.
         $user = User::create($data);
@@ -74,7 +60,8 @@ class UserManagerController extends Controller
         // $token = Password::getRepository()->create($user);
         // $user->sendPasswordResetNotification($token);
 
-        return back()->with('success','New users email send Successfully');
+        return redirect()->route('admin.usermanager.show',$user->id)->with('success','New users email send Successfully');
+
 
 
     }
@@ -85,10 +72,9 @@ class UserManagerController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show($user)
+    public function show(User $usermanager)
     {
-        $data = User::where('id',$user)->firstOrFail();
-        return view('admin.usermanager.show')->withData($data);
+        return view('admin.usermanager.show')->withData($usermanager);
 
     }
 
@@ -98,11 +84,9 @@ class UserManagerController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit($user)
+    public function edit(User $usermanager)
     {
-        // dd($user);
-        $user = User::where('id',$user)->firstOrFail();
-        return view('admin.usermanager.edit')->withData($user);
+        return view('admin.usermanager.edit')->withData($usermanager);
     }
 
     /**
@@ -112,20 +96,18 @@ class UserManagerController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$user)
+    public function update(UsermanagerRequest $request,User $usermanager)
     {
-        // dd($request->all());
-        $data = $this->validateUser();
+        $data = $request->validated();
+
         unset($data['password']);
         if (!empty(request()->password)) {
             $data +=['password'=>Hash::make(request()->password)];
         }
-       
-        $user = User::where('id',$user)->firstOrFail();
 
-        $user->update($data);
+        $usermanager->update($data);
 
-        return redirect()->route('admin.usermanager.index')->with('info','User Updated,');
+        return redirect()->route('admin.usermanager.index')->with('success','User Updated,');
 
     }
 
@@ -135,15 +117,14 @@ class UserManagerController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy($user)
+    public function destroy(User $usermanager)
     {
-        if (Auth::id() == $user) {
+        if (Auth::id() == $usermanager->id) {
             return redirect()->back()->with('error','Can not delete self');
         }
 
-        $data = User::where('id',$user)->first();
-        $data->delete();
-        return redirect()->back()->with('success','Successfully deleted.');
+        $usermanager->delete();
+        return redirect()->route('admin.usermanager.index')->with('success','Successfully deleted.');
     }
     /**
      * Reset the password for specified resource.
@@ -151,12 +132,12 @@ class UserManagerController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function resetPassword($user)
+    public function resetPassword(User $usermanager)
     {
-        $data = User::where('id',$user)->firstOrFail();
-        $token = Password::getRepository()->create($data);
-        $data->sendPasswordResetNotification($token);
-        return redirect()->back()->with('success','Users Password reset email send Successfull.');
+        $token = Password::getRepository()->create($usermanager);
+        $usermanager->sendPasswordResetNotification($token);
+        return redirect()->route('admin.usermanager.index')
+        ->with('success','Users Password reset email send Successfull.');
 
     }
 
