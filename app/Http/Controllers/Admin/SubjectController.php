@@ -87,9 +87,9 @@ class SubjectController extends Controller
         $data = $request->validated();
         $subject->update([
             'name'=>$data['subjectName'],
-            'code'=>$data['subjectCode'],
-            'description'=>$data['subjectDescription'],
-            'subject_id'=> $data['parent'],
+            'code'=>$data['subjectCode'] ?? $subject->code,
+            'description'=>$data['subjectDescription'] ?? $subject->description,
+            'subject_id'=> $data['parent'] ?? $subject->subject_id,
             'slug'=>Str::slug($data['subjectName'])
         ]);
 

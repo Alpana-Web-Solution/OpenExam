@@ -21,8 +21,11 @@ class SubjectFactory extends Factory
      */
     public function definition()
     {
+        $name = $this->faker->word();
         return [
-            'name'=> $this->faker->word(3),
+            'name'=> $name,
+            'code'=> $name,
+            'description'=> $this->faker->sentence()
         ];
     }
 }

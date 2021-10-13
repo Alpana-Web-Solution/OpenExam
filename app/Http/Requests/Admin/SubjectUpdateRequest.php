@@ -24,10 +24,10 @@ class SubjectUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'subjectName' => 'required|min:2',
-            'subjectCode'=>'nullable|min:2',
-            'subjectDescription'=>'nullable|min:2',
-            'parent'=>'nullable'
+            'subjectName' => ['required','min:2'],
+            'subjectCode'=>['nullable','min:2'],
+            'subjectDescription'=>['nullable','min:2'],
+            'parent'=>['nullable','min:2']
         ];
     }
 }
