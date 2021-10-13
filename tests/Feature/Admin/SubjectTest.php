@@ -11,7 +11,7 @@ class SubjectTest extends TestCase
 {
     public function test_admin_can_view_subject_list()
     {
-        $subject =  Subject::factory(1)->create();
+        $subject =  Subject::factory(1)->create(["name"=>"Subject_Name"]);
         $this->assertDatabaseCount('subjects', 1);
         $this->actAsAdmin();
         $this->get(route('admin.subject.index'))->assertSee($subject->first()->name);
@@ -19,7 +19,7 @@ class SubjectTest extends TestCase
 
     public function test_user_can_not_access_subject_list()
     {
-        $subject =  Subject::factory(1)->create();
+        $subject =  Subject::factory(1)->create(["name"=>"Subject_Name"]);
         $this->assertDatabaseCount('subjects', 1);
         $this->signIn();
         $this->get(route('admin.subject.index'))
@@ -28,7 +28,7 @@ class SubjectTest extends TestCase
 
     public function test_check_one_subject()
     {
-        $subject =  Subject::factory(1)->create();
+        $subject =  Subject::factory(1)->create(["name"=>"Subject_Name"]);
         $this->assertDatabaseCount('subjects', 1);
         $this->actAsAdmin();
         $this->get(route('admin.subject.show', $subject->first()->id))
@@ -45,7 +45,7 @@ class SubjectTest extends TestCase
 
     public function test_admin_can_see_subject_edit_form()
     {
-        $subject =  Subject::factory(1)->create();
+        $subject =  Subject::factory(1)->create(["name"=>"Subject_Name"]);
         $this->assertDatabaseCount('subjects', 1);
         $this->actAsAdmin();
         $this->get(route('admin.subject.edit', $subject->first()->id))->assertSee($subject->first()->name);
@@ -53,7 +53,7 @@ class SubjectTest extends TestCase
 
     public function test_admin_can_update_subject()
     {
-        $subject =  Subject::factory(1)->create();
+        $subject =  Subject::factory(1)->create(["name"=>"Subject_Name"]);
         $this->assertDatabaseCount('subjects', 1);
         $this->actAsAdmin();
         $this->put(route('admin.subject.update', $subject->first()->id), ['subjectName' => 'nameIsHere'])
@@ -72,7 +72,7 @@ class SubjectTest extends TestCase
 
     public function test_admin_can_see_subject_trash()
     {
-        $subject =  Subject::factory(1)->create();
+        $subject =  Subject::factory(1)->create(["name"=>"Subject_Name"]);
         $this->actAsAdmin();
         $this->delete(route('admin.subject.destroy', $subject->first()->id));
         $this->get('admin.subject.trash')
@@ -81,7 +81,7 @@ class SubjectTest extends TestCase
 
     public function test_admin_can_restore_deleted_subject()
     {
-        $subject =  Subject::factory(1)->create();
+        $subject =  Subject::factory(1)->create(["name"=>"Subject_Name"]);
         $this->actAsAdmin();
         $this->delete(route('admin.subject.destroy', $subject->first()->id));
         $this->get(route('admin.subject.index'))->assertDontSee($subject->first()->name);
@@ -91,7 +91,7 @@ class SubjectTest extends TestCase
 
     public function test_admin_can_delete_permanently()
     {
-        $subject =  Subject::factory(1)->create();
+        $subject =  Subject::factory(1)->create(["name"=>"Subject_Name"]);
         $this->actAsAdmin();
         $this->delete(route('admin.subject.destroy', $subject->first()->id));
         $this->post(route('admin.subject.forceDelete', $subject->first()->id));
