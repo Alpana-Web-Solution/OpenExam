@@ -57,7 +57,7 @@ Copy to your local machine using git
 ```bash
 git clone https://github.com/Alpana-Web-Solution/OpenExam.git
 ```
-
+Now install using component, if installation failed this replace "install" with "Update"
 ```bash
 composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction
 ```
