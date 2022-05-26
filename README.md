@@ -53,6 +53,11 @@ Here is a medium example on how to install laravel on Heroku platform.
 
 But you can also try it on your local machine.
 
+Copy to your local machine using git
+```bash
+git clone https://github.com/Alpana-Web-Solution/OpenExam.git
+```
+
 ```bash
 composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction
 ```
